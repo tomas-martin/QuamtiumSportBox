@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --q-red: #ef4444;
+    --q-red-dark: #b91c1c;
+    --q-bg: #0a0a0a;
+    --q-surface: #141414;
+    --q-border: #222222;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-neutral-950 text-neutral-100 antialiased;
+    font-family: 'Inter', sans-serif;
+    overscroll-behavior: none;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.05em;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold px-5 py-2.5 rounded-xl transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-600 text-neutral-100 font-medium px-4 py-2 rounded-xl transition-all duration-150;
+  }
+
+  .card {
+    @apply bg-neutral-900 border border-neutral-800 rounded-2xl p-4;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full;
+  }
+
+  .input {
+    @apply w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2.5 text-sm text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-red-500 transition-colors;
+  }
+
+  /* Scroll suave en mobile */
+  .scroll-area {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Animaciones */
+@keyframes slide-up {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.2s ease-out;
+}
+
+/* PWA safe areas para notch/dynamic island */
+.safe-top { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
