@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { api } from '../lib/api';
 
@@ -15,13 +16,15 @@ export function AuthProvider({ children }) {
       setProfile(p);
       return p;
     } catch {
+      // Si la API falla, no bloqueamos — el usuario igual está autenticado vía Supabase
+      setProfile(null);
       return null;
     }
   }
 
   useEffect(() => {
-    // Safety timeout — si en 5s no resuelve, liberar el spinner
-    const timeout = setTimeout(() => setLoading(false), 5000);
+    // Safety timeout — si en 6s no resuelve, liberar el spinner
+    const timeout = setTimeout(() => setLoading(false), 6000);
 
     // Sesión inicial
     supabase.auth.getSession().then(async ({ data: { session } }) => {
@@ -47,10 +50,19 @@ export function AuthProvider({ children }) {
   const signInWithGoogle = () =>
     supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
     });
 
-  const signOut = () => supabase.auth.signOut();
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    setProfile(null);
+    // La navegación la maneja el componente que llama signOut
+    // o el listener onAuthStateChange redirige automáticamente
+    window.location.href = '/login';
+  };
 
   const isAdmin = profile?.role === 'admin';
 

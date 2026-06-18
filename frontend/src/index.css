@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,25 +8,28 @@
   :root {
     --q-red: #ef4444;
     --q-red-dark: #b91c1c;
-    --q-bg: #060606;
-    --q-surface: #121212;
-    --q-border: #1e1e1e;
+    --q-red-glow: rgba(239, 68, 68, 0.15);
+    --q-bg: #080808;
+    --q-surface: #111111;
+    --q-surface-2: #161616;
+    --q-border: #1f1f1f;
+    --q-border-soft: #1a1a1a;
+    --sidebar-width: 240px;
   }
 
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
 
   html {
     -webkit-tap-highlight-color: transparent;
-    background-color: #060606;
+    background-color: var(--q-bg);
+    scroll-behavior: smooth;
   }
 
   body {
-    background-color: #060606;
-    background-image: 
-      radial-gradient(circle at 90% 10%, rgba(239, 68, 68, 0.09) 0%, transparent 40%),
-      radial-gradient(circle at 10% 90%, rgba(249, 115, 22, 0.05) 0%, transparent 40%);
+    background-color: var(--q-bg);
+    background-image:
+      radial-gradient(ellipse at 80% 0%, rgba(239, 68, 68, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 100%, rgba(249, 115, 22, 0.05) 0%, transparent 50%);
     background-attachment: fixed;
     @apply text-neutral-100 antialiased;
     font-family: 'Inter', sans-serif;
@@ -41,28 +44,60 @@
 }
 
 @layer components {
+  /* ── Buttons ──────────────────────────────────────── */
   .btn-primary {
-    @apply bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-orange-500 active:scale-[0.98] text-white font-bold px-5 py-2.5 rounded-xl transition-all duration-300 disabled:opacity-40 disabled:scale-100 disabled:cursor-not-allowed shadow-md hover:shadow-lg hover:shadow-red-500/25;
+    @apply bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-orange-500
+      active:scale-[0.97] text-white font-bold px-5 py-2.5 rounded-xl
+      transition-all duration-200 disabled:opacity-40 disabled:scale-100 disabled:cursor-not-allowed
+      shadow-md hover:shadow-lg hover:shadow-red-500/20 text-sm;
   }
 
   .btn-ghost {
-    @apply bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800/40 text-neutral-200 font-medium px-4 py-2 rounded-xl transition-all duration-200 active:scale-95;
+    @apply bg-neutral-900/70 hover:bg-neutral-800/80 border border-neutral-800/50
+      text-neutral-300 hover:text-white font-medium px-4 py-2 rounded-xl
+      transition-all duration-200 active:scale-95 text-sm;
   }
 
+  .btn-danger {
+    @apply bg-red-950/40 hover:bg-red-900/50 border border-red-800/30 hover:border-red-600/50
+      text-red-400 hover:text-red-300 font-semibold px-4 py-2 rounded-xl
+      transition-all duration-200 active:scale-95 text-sm;
+  }
+
+  /* ── Cards ────────────────────────────────────────── */
   .card {
-    @apply bg-neutral-900/45 backdrop-blur-lg border border-neutral-800/60 rounded-2xl p-4 transition-all duration-300 shadow-lg shadow-black/20;
+    @apply bg-neutral-900/40 backdrop-blur-lg border border-neutral-800/50
+      rounded-2xl p-4 transition-all duration-300 shadow-lg shadow-black/20;
+  }
+
+  .card-hover {
+    @apply card hover:bg-neutral-900/60 hover:border-neutral-700/60 hover:shadow-xl cursor-pointer;
   }
 
   .glass-panel {
-    @apply bg-neutral-950/70 backdrop-blur-xl border border-neutral-900/80 shadow-2xl;
+    @apply bg-neutral-950/80 backdrop-blur-xl border border-neutral-900/80 shadow-2xl;
   }
 
+  /* ── Badges ───────────────────────────────────────── */
   .badge {
-    @apply inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full border border-neutral-800/40;
+    @apply inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full border;
   }
 
+  /* ── Inputs ───────────────────────────────────────── */
   .input {
-    @apply w-full bg-neutral-900/60 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-neutral-100 placeholder-neutral-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500/20 transition-all;
+    @apply w-full bg-neutral-900/60 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm
+      text-neutral-100 placeholder-neutral-600 focus:outline-none focus:border-red-500
+      focus:ring-1 focus:ring-red-500/20 transition-all;
+  }
+
+  /* ── Section header ───────────────────────────────── */
+  .section-title {
+    @apply text-xs font-bold tracking-widest uppercase text-neutral-500 px-1;
+  }
+
+  /* ── Divider ──────────────────────────────────────── */
+  .divider {
+    @apply h-px bg-neutral-800/60 my-3;
   }
 
   /* Scroll suave en mobile */
@@ -70,27 +105,61 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
+
+  /* ── Nav link active ──────────────────────────────── */
+  .nav-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold
+      text-neutral-500 hover:text-neutral-200 hover:bg-neutral-800/60
+      transition-all duration-200;
+  }
+
+  .nav-link-active {
+    @apply text-white bg-red-600/10 border border-red-500/15 hover:bg-red-600/15;
+  }
+
+  /* ── Stat card ────────────────────────────────────── */
+  .stat-card {
+    @apply card flex flex-col gap-1;
+  }
 }
 
-/* Animaciones */
+/* ── Animations ─────────────────────────────────────── */
 @keyframes slide-up {
-  from { transform: translateY(12px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+  50%       { box-shadow: 0 0 20px 4px rgba(239,68,68,0.15); }
 }
 
 .animate-slide-up {
-  animation: slide-up 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* PWA safe areas para notch/dynamic island */
-.safe-top { padding-top: env(safe-area-inset-top); }
+.animate-fade-in {
+  animation: fade-in 0.2s ease forwards;
+}
+
+/* ── PWA safe areas ──────────────────────────────────── */
+.safe-top    { padding-top:    env(safe-area-inset-top); }
 .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 
-/* Hide scrollbar utility */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+/* ── Hide scrollbar ──────────────────────────────────── */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Custom scrollbar ────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a3a; }
+
+/* ── Selection ───────────────────────────────────────── */
+::selection { background: rgba(239,68,68,0.25); color: white; }

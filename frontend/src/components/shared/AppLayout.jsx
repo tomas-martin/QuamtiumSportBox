@@ -13,86 +13,104 @@ export default function AppLayout() {
   const { isAdmin, loading } = useAuth();
 
   return (
-    <div className="min-h-screen bg-neutral-950 flex flex-col safe-top">
-      {/* Top bar */}
-      <header className="border-b border-neutral-900/80 bg-neutral-950/60 backdrop-blur-md sticky top-0 z-30 px-5 py-3.5">
-        <div className="max-w-5xl mx-auto w-full flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-gradient-to-tr from-red-600 to-red-500 rounded-xl flex items-center justify-center shadow-md shadow-red-950/40">
-              <span className="text-white font-black text-sm">Q</span>
+    <div className="min-h-screen bg-[#080808] flex flex-col">
+      {/* ── Top Navbar ── */}
+      <header className="sticky top-0 z-40 border-b border-neutral-900/70 bg-neutral-950/70 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+
+          {/* Logo */}
+          <div className="flex items-center gap-2.5 flex-shrink-0">
+            <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center shadow-lg shadow-red-950/40">
+              <span className="text-white font-black text-sm leading-none">Q</span>
             </div>
-            <div>
-              <span className="font-bold tracking-widest text-sm text-white block">QUAMTIUM</span>
-              <span className="text-[9px] text-neutral-500 tracking-widest uppercase block -mt-0.5">Sportbox</span>
+            <div className="hidden sm:block">
+              <span className="font-black tracking-widest text-[13px] text-white block leading-none">QUAMTIUM</span>
+              <span className="text-[9px] text-neutral-500 tracking-widest uppercase leading-none">Sportbox</span>
             </div>
           </div>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-1 bg-neutral-900/40 border border-neutral-805/40 rounded-xl p-1">
+          {/* Desktop Nav — centro */}
+          <nav className="hidden md:flex items-center gap-1 bg-neutral-900/50 border border-neutral-800/40 rounded-2xl p-1">
             {navItems.map(({ to, icon: Icon, label, end }) => (
               <NavLink
                 key={to}
                 to={to}
                 end={end}
                 className={({ isActive }) =>
-                  `flex items-center gap-1.5 px-4.5 py-2 rounded-lg text-[10px] font-extrabold uppercase tracking-wider transition-all duration-300 ${
+                  `flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
                     isActive
-                      ? 'text-red-500 bg-red-500/5'
-                      : 'text-neutral-400 hover:text-neutral-200'
+                      ? 'text-white bg-red-600/15 border border-red-500/20'
+                      : 'text-neutral-500 hover:text-neutral-200 hover:bg-neutral-800/50'
                   }`
                 }
               >
-                <Icon size={14} />
-                <span>{label}</span>
+                {({ isActive }) => (
+                  <>
+                    <Icon size={14} strokeWidth={isActive ? 2.5 : 2} />
+                    <span>{label}</span>
+                  </>
+                )}
               </NavLink>
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          {/* Right side — Admin badge */}
+          <div className="flex items-center gap-2 flex-shrink-0">
             {!loading && isAdmin && (
               <NavLink
                 to="/admin"
-                className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-red-400 hover:text-white hover:bg-red-600 bg-red-600/10 border border-red-500/20 px-3 py-1.5 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-red-600/15"
+                className={({ isActive }) =>
+                  `flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-xl transition-all duration-200 ${
+                    isActive
+                      ? 'bg-red-600 text-white shadow-md shadow-red-950/30'
+                      : 'text-red-400 hover:text-white hover:bg-red-600 bg-red-600/10 border border-red-500/20 hover:shadow-md hover:shadow-red-950/30'
+                  }`
+                }
               >
                 <ShieldCheck size={13} />
-                Panel Admin
+                <span className="hidden sm:inline">Panel Admin</span>
+                <span className="sm:hidden">Admin</span>
               </NavLink>
             )}
           </div>
         </div>
       </header>
 
-      {/* Content */}
-      <main className="flex-1 overflow-y-auto scroll-area pb-28 px-4 sm:px-6">
-        <div className="max-w-5xl mx-auto w-full">
+      {/* ── Page Content ── */}
+      <main className="flex-1 overflow-y-auto scroll-area pb-28 md:pb-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
           <Outlet />
         </div>
       </main>
 
-      {/* Bottom nav */}
-      <nav className="md:hidden fixed bottom-5 left-4 right-4 bg-neutral-900/60 backdrop-blur-xl border border-neutral-800/60 rounded-2xl safe-bottom z-30 max-w-md mx-auto shadow-2xl shadow-black/50">
-        <div className="flex items-center justify-around px-2 py-2">
-          {navItems.map(({ to, icon: Icon, label, end }) => (
-            <NavLink
-              key={to}
-              to={to}
-              end={end}
-              className={({ isActive }) =>
-                `flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl transition-all duration-300 min-w-[60px] ${
-                  isActive
-                    ? 'text-red-500 bg-red-500/5'
-                    : 'text-neutral-500 hover:text-neutral-300'
-                }`
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} className="transition-transform duration-300 active:scale-90" />
-                  <span className="text-[10px] font-semibold tracking-wide">{label}</span>
-                </>
-              )}
-            </NavLink>
-          ))}
+      {/* ── Mobile Bottom Nav ── */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 safe-bottom">
+        <div className="mx-3 mb-3 bg-neutral-950/80 backdrop-blur-2xl border border-neutral-800/60 rounded-2xl shadow-2xl shadow-black/60">
+          <div className="flex items-center justify-around px-2 py-1.5">
+            {navItems.map(({ to, icon: Icon, label, end }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end={end}
+                className={({ isActive }) =>
+                  `flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl transition-all duration-200 min-w-[64px] ${
+                    isActive
+                      ? 'text-red-500'
+                      : 'text-neutral-600 hover:text-neutral-400'
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <div className={`p-1.5 rounded-xl transition-all duration-200 ${isActive ? 'bg-red-500/10' : ''}`}>
+                      <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
+                    </div>
+                    <span className="text-[10px] font-semibold tracking-wide">{label}</span>
+                  </>
+                )}
+              </NavLink>
+            ))}
+          </div>
         </div>
       </nav>
     </div>
