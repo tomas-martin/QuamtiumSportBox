@@ -20,10 +20,14 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
+    // Safety timeout — si en 5s no resuelve, liberar el spinner
+    const timeout = setTimeout(() => setLoading(false), 5000);
+
     // Sesión inicial
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setUser(session?.user ?? null);
       if (session?.user) await loadProfile();
+      clearTimeout(timeout);
       setLoading(false);
     });
 
