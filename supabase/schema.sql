@@ -116,8 +116,13 @@ select
   at.duration_minutes,
   i.name as instructor_name,
   i.avatar_url as instructor_avatar,
-  cs.max_capacity - count(b.id filter (where b.status = 'confirmed'))::integer as available_spots,
-  count(b.id filter (where b.status = 'confirmed'))::integer as booked_count
+
+  (
+    cs.max_capacity - (count(b.id) filter (where b.status = 'confirmed'))::integer
+  ) as available_spots,
+
+  (count(b.id) filter (where b.status = 'confirmed'))::integer as booked_count
+
 from public.class_schedules cs
 join public.activity_types at on at.id = cs.activity_type_id
 left join public.instructors i on i.id = cs.instructor_id
@@ -231,9 +236,7 @@ create policy "bookings_admin_all" on public.bookings for all
     exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
   );
 
--- =============================================
--- SEED: Datos iniciales de ejemplo
--- =============================================
+
 insert into public.activity_types (name, description, color, icon, duration_minutes) values
   ('Boxing', 'Clases de boxeo recreativo y técnico', '#ef4444', 'boxing-glove', 60),
   ('Funcional', 'Entrenamiento funcional de alta intensidad', '#f97316', 'zap', 45),
