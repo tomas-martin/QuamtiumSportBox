@@ -21,14 +21,14 @@ export default function AdminDashboardPage() {
   ];
 
   return (
-    <div className="px-4 py-5 animate-slide-up space-y-6">
+    <div className="py-5 animate-slide-up space-y-6">
       <div>
         <p className="text-neutral-400 text-sm">Panel de</p>
         <h1 className="text-4xl text-white">ADMINISTRACIÓN</h1>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {cards.map(({ label, value, icon: Icon, color, bg }) => (
           <div key={label} className="card text-center p-3">
             <div className={`w-9 h-9 ${bg} rounded-xl flex items-center justify-center mx-auto mb-2`}>

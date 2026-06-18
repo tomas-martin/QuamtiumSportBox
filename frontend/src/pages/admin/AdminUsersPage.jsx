@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Shield, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Shield, User, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -38,15 +39,20 @@ export default function AdminUsersPage() {
   }
 
   return (
-    <div className="px-4 py-5 animate-slide-up">
-      <h1 className="text-4xl text-white mb-5">USUARIOS</h1>
+    <div className="py-5 animate-slide-up space-y-5">
+      <div>
+        <Link to="/admin" className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-neutral-400 hover:text-white transition-colors mb-3">
+          <ArrowLeft size={14} /> Volver al panel
+        </Link>
+        <h1 className="text-4xl text-white">USUARIOS</h1>
+      </div>
 
       {loading ? (
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[1, 2, 3, 4].map(i => <div key={i} className="h-20 bg-neutral-800 rounded-2xl animate-pulse" />)}
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {users.map(u => (
             <div key={u.id} className="card flex items-center gap-3">
               {u.avatar_url ? (

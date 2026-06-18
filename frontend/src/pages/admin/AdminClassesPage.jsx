@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Users, Pencil, Trash2, XCircle, ChevronRight } from 'lucide-react';
+import { Plus, Users, Pencil, Trash2, XCircle, ChevronRight, ArrowLeft } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import toast from 'react-hot-toast';
@@ -54,16 +54,21 @@ export default function AdminClassesPage() {
   function openEdit(cls) { setEditingClass(cls); setShowModal(true); }
 
   return (
-    <div className="px-4 py-5 animate-slide-up">
-      <div className="flex items-center justify-between mb-5">
-        <h1 className="text-4xl text-white">CLASES</h1>
-        <button onClick={openCreate} className="btn-primary flex items-center gap-1.5 text-sm py-2">
-          <Plus size={16} /> Nueva
-        </button>
+    <div className="py-5 animate-slide-up space-y-5">
+      <div>
+        <Link to="/admin" className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-neutral-400 hover:text-white transition-colors mb-3">
+          <ArrowLeft size={14} /> Volver al panel
+        </Link>
+        <div className="flex items-center justify-between">
+          <h1 className="text-4xl text-white">CLASES</h1>
+          <button onClick={openCreate} className="btn-primary flex items-center gap-1.5 text-sm py-2">
+            <Plus size={16} /> Nueva
+          </button>
+        </div>
       </div>
 
       {loading ? (
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[1, 2, 3].map(i => <div key={i} className="h-28 bg-neutral-800 rounded-2xl animate-pulse" />)}
         </div>
       ) : classes.length === 0 ? (
@@ -71,7 +76,7 @@ export default function AdminClassesPage() {
           <p className="text-neutral-400 text-sm">No hay clases programadas</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {classes.map(cls => (
             <AdminClassCard
               key={cls.id}

@@ -35,7 +35,7 @@ export default function DashboardPage() {
   const firstName = profile?.full_name?.split(' ')[0] || 'Atleta';
 
   return (
-    <div className="px-4 py-6 space-y-7 animate-slide-up">
+    <div className="py-6 space-y-7 animate-slide-up">
       {/* Greeting */}
       <div className="relative overflow-hidden rounded-3xl bg-neutral-900/30 border border-neutral-900/50 p-6 flex flex-col justify-end min-h-[120px] shadow-inner shadow-black/20">
         <div className="absolute top-0 right-0 w-24 h-24 bg-red-600/10 rounded-full blur-2xl" />
@@ -45,67 +45,69 @@ export default function DashboardPage() {
         </h1>
       </div>
 
-      {/* Próximas reservas */}
-      <section className="space-y-3">
-        <div className="flex items-center justify-between px-1">
-          <h2 className="text-lg font-bold tracking-wider text-neutral-300">TUS PRÓXIMOS TURNOS</h2>
-          {myBookings.length > 0 && (
-            <Link to="/my-bookings" className="text-red-500 hover:text-red-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1 transition-colors">
-              Ver todos <ChevronRight size={14} />
-            </Link>
-          )}
-        </div>
-        
-        {loading ? (
-          <div className="space-y-2">
-            {[1, 2].map(i => (
-              <div key={i} className="h-16 bg-neutral-900/40 border border-neutral-800/50 rounded-2xl animate-pulse" />
-            ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        {/* Próximas reservas */}
+        <section className="space-y-3">
+          <div className="flex items-center justify-between px-1">
+            <h2 className="text-lg font-bold tracking-wider text-neutral-300">TUS PRÓXIMOS TURNOS</h2>
+            {myBookings.length > 0 && (
+              <Link to="/my-bookings" className="text-red-500 hover:text-red-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1 transition-colors">
+                Ver todos <ChevronRight size={14} />
+              </Link>
+            )}
           </div>
-        ) : myBookings.length === 0 ? (
-          <div className="card py-6 text-center text-neutral-500 text-sm flex flex-col items-center justify-center gap-2">
-            <Clock size={20} className="text-neutral-600" />
-            <p>No tenés ningún turno reservado aún.</p>
-          </div>
-        ) : (
-          <div className="space-y-2.5">
-            {myBookings.map(b => (
-              <UpcomingBookingCard key={b.id} booking={b} />
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* Clases disponibles */}
-      <section className="space-y-3">
-        <div className="flex items-center justify-between px-1">
-          <h2 className="text-lg font-bold tracking-wider text-neutral-300">CLASES DISPONIBLES</h2>
-          <Link to="/schedule" className="text-red-500 hover:text-red-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1 transition-colors">
-            Ver agenda <ChevronRight size={14} />
-          </Link>
-        </div>
-
-        {loading ? (
-          <div className="space-y-3">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="h-28 bg-neutral-900/40 border border-neutral-800/50 rounded-2xl animate-pulse" />
-            ))}
-          </div>
-        ) : upcomingClasses.length === 0 ? (
-          <div className="card text-center py-12 flex flex-col items-center justify-center space-y-3">
-            <div className="w-12 h-12 bg-neutral-900 rounded-full flex items-center justify-center">
-              <CalendarDays className="text-neutral-600" size={22} />
+          
+          {loading ? (
+            <div className="space-y-2">
+              {[1, 2].map(i => (
+                <div key={i} className="h-16 bg-neutral-900/40 border border-neutral-800/50 rounded-2xl animate-pulse" />
+              ))}
             </div>
-            <p className="text-neutral-500 text-sm">No hay clases programadas por el momento</p>
+          ) : myBookings.length === 0 ? (
+            <div className="card py-6 text-center text-neutral-500 text-sm flex flex-col items-center justify-center gap-2">
+              <Clock size={20} className="text-neutral-600" />
+              <p>No tenés ningún turno reservado aún.</p>
+            </div>
+          ) : (
+            <div className="space-y-2.5">
+              {myBookings.map(b => (
+                <UpcomingBookingCard key={b.id} booking={b} />
+              ))}
+            </div>
+          )}
+        </section>
+
+        {/* Clases disponibles */}
+        <section className="space-y-3">
+          <div className="flex items-center justify-between px-1">
+            <h2 className="text-lg font-bold tracking-wider text-neutral-300">CLASES DISPONIBLES</h2>
+            <Link to="/schedule" className="text-red-500 hover:text-red-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1 transition-colors">
+              Ver agenda <ChevronRight size={14} />
+            </Link>
           </div>
-        ) : (
-          <div className="space-y-3">
-            {upcomingClasses.map(cls => (
-              <ClassCard key={cls.id} cls={cls} onBooked={loadDashboard} />
-            ))}
-          </div>
-        )}
-      </section>
+
+          {loading ? (
+            <div className="space-y-3">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="h-28 bg-neutral-900/40 border border-neutral-800/50 rounded-2xl animate-pulse" />
+              ))}
+            </div>
+          ) : upcomingClasses.length === 0 ? (
+            <div className="card text-center py-12 flex flex-col items-center justify-center space-y-3">
+              <div className="w-12 h-12 bg-neutral-900 rounded-full flex items-center justify-center">
+                <CalendarDays className="text-neutral-600" size={22} />
+              </div>
+              <p className="text-neutral-500 text-sm">No hay clases programadas por el momento</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {upcomingClasses.map(cls => (
+                <ClassCard key={cls.id} cls={cls} onBooked={loadDashboard} />
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   );
 }

@@ -46,7 +46,7 @@ export default function MyBookingsPage() {
   }
 
   return (
-    <div className="px-4 py-5 animate-slide-up space-y-6">
+    <div className="py-5 animate-slide-up space-y-6">
       <h1 className="text-4xl text-white">MIS TURNOS</h1>
 
       {/* Tabs */}
@@ -68,7 +68,7 @@ export default function MyBookingsPage() {
 
       {/* List */}
       {loading ? (
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[1, 2].map(i => <div key={i} className="h-24 bg-neutral-900/40 border border-neutral-800/50 rounded-2xl animate-pulse" />)}
         </div>
       ) : shown.length === 0 ? (
@@ -81,7 +81,7 @@ export default function MyBookingsPage() {
           </p>
         </div>
       ) : (
-        <div className="space-y-3.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {shown.map(b => (
             <BookingCard key={b.id} booking={b} onCancel={handleCancel} showCancel={tab === 'upcoming'} />
           ))}

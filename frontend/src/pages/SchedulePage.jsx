@@ -59,9 +59,9 @@ export default function SchedulePage() {
       </div>
 
       {/* Classes */}
-      <div className="px-4 py-6 space-y-6">
+      <div className="py-6 space-y-6">
         {loading ? (
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[1, 2, 3].map(i => (
               <div key={i} className="h-28 bg-neutral-900/40 border border-neutral-800/50 rounded-2xl animate-pulse" />
             ))}
@@ -84,7 +84,7 @@ export default function SchedulePage() {
                 <h3 className="text-sm font-bold tracking-widest text-red-500 uppercase px-1">
                   {format(new Date(day + 'T12:00:00'), "EEEE d 'de' MMMM", { locale: es })}
                 </h3>
-                <div className="space-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {dayClasses.map(cls => (
                     <ClassCard
                       key={cls.id}
