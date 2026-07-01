@@ -46,7 +46,11 @@ export default function SchedulePage() {
     <div className="animate-slide-up">
 
       {/* ── Week navigator ── */}
-      <div className="sticky top-14 z-20 bg-[#080808]/90 backdrop-blur-md border-b border-neutral-900/60 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 mb-6 flex items-center justify-between gap-3">
+      {/* top = altura del header (56px) + safe-area-inset-top del notch */}
+      <div
+        className="sticky z-20 bg-[#080808]/90 backdrop-blur-md border-b border-neutral-900/60 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 mb-6 flex items-center justify-between gap-3"
+        style={{ top: 'calc(56px + env(safe-area-inset-top, 0px))' }}
+      >
         <button
           id="btn-prev-week"
           onClick={() => setWeekStart(w => subWeeks(w, 1))}

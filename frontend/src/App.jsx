@@ -70,9 +70,23 @@ export default function App() {
         <AppRoutes />
         <Toaster
           position="top-center"
+          containerStyle={{
+            /* Empuja el toast por debajo del notch / dynamic island */
+            top: 'calc(env(safe-area-inset-top, 0px) + 8px)',
+          }}
           toastOptions={{
-            style: { background: '#1a1a1a', color: '#fafafa', border: '1px solid #2a2a2a' },
+            style: {
+              background: '#1a1a1a',
+              color: '#fafafa',
+              border: '1px solid #2a2a2a',
+              borderRadius: '14px',
+              fontSize: '14px',
+              fontFamily: 'Inter, sans-serif',
+              fontWeight: 500,
+              boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+            },
             success: { iconTheme: { primary: '#ef4444', secondary: '#fafafa' } },
+            duration: 3000,
           }}
         />
       </BrowserRouter>

@@ -13,9 +13,18 @@ export default function AppLayout() {
   const { isAdmin, loading } = useAuth();
 
   return (
-    <div className="min-h-screen bg-[#080808] flex flex-col">
+    <div className="min-h-dvh bg-[#080808] flex flex-col">
+
       {/* ── Top Navbar ── */}
-      <header className="sticky top-0 z-40 border-b border-neutral-900/70 bg-neutral-950/70 backdrop-blur-xl">
+      {/*
+        padding-top: env(safe-area-inset-top) → el contenido del header
+        empieza DEBAJO del notch / dynamic island.
+        La variable --header-h se usa en SchedulePage para el sticky sub-header.
+      */}
+      <header
+        className="sticky top-0 z-40 border-b border-neutral-900/70 bg-neutral-950/80 backdrop-blur-xl"
+        style={{ paddingTop: 'env(safe-area-inset-top)' }}
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
 
           {/* Logo */}
@@ -77,23 +86,35 @@ export default function AppLayout() {
       </header>
 
       {/* ── Page Content ── */}
-      <main className="flex-1 overflow-y-auto scroll-area pb-28 md:pb-10">
+      {/*
+        pb-safe-28: 7rem + env(safe-area-inset-bottom).
+        En desktop usamos pb-10 normal porque no hay bottom nav.
+      */}
+      <main className="flex-1 overflow-y-auto scroll-area pb-safe-28 md:pb-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
           <Outlet />
         </div>
       </main>
 
       {/* ── Mobile Bottom Nav ── */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 safe-bottom">
-        <div className="mx-3 mb-3 bg-neutral-950/80 backdrop-blur-2xl border border-neutral-800/60 rounded-2xl shadow-2xl shadow-black/60">
-          <div className="flex items-center justify-around px-2 py-1.5">
+      {/*
+        El contenedor tiene padding-bottom = safe-area-inset-bottom para que
+        los iconos no queden detrás de la home indicator del iPhone.
+        El mx-3 y mb-3 es el "floating pill" por encima de la zona segura.
+      */}
+      <nav
+        className="md:hidden fixed bottom-0 left-0 right-0 z-40"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+      >
+        <div className="mx-3 mb-2 bg-neutral-950/85 backdrop-blur-2xl border border-neutral-800/70 rounded-2xl shadow-2xl shadow-black/70">
+          <div className="flex items-center justify-around px-1 py-1">
             {navItems.map(({ to, icon: Icon, label, end }) => (
               <NavLink
                 key={to}
                 to={to}
                 end={end}
                 className={({ isActive }) =>
-                  `flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl transition-all duration-200 min-w-[64px] ${
+                  `flex flex-col items-center gap-0.5 px-3 py-2.5 rounded-xl transition-all duration-200 min-w-[60px] min-h-[52px] justify-center ${
                     isActive
                       ? 'text-red-500'
                       : 'text-neutral-600 hover:text-neutral-400'
@@ -102,10 +123,10 @@ export default function AppLayout() {
               >
                 {({ isActive }) => (
                   <>
-                    <div className={`p-1.5 rounded-xl transition-all duration-200 ${isActive ? 'bg-red-500/10' : ''}`}>
+                    <div className={`p-1.5 rounded-xl transition-all duration-200 ${isActive ? 'bg-red-500/12' : ''}`}>
                       <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
                     </div>
-                    <span className="text-[10px] font-semibold tracking-wide">{label}</span>
+                    <span className="text-[9px] font-bold tracking-wide">{label}</span>
                   </>
                 )}
               </NavLink>

@@ -39,7 +39,7 @@ export default function ProfilePage() {
     : '?';
 
   return (
-    <div className="py-6 animate-slide-up space-y-5 max-w-lg">
+    <div className="py-5 sm:py-6 animate-slide-up space-y-5 max-w-lg pb-safe-6">
 
       {/* ── Header ── */}
       <h1 className="text-4xl sm:text-5xl text-white leading-none">PERFIL</h1>

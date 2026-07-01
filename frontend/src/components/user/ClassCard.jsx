@@ -84,7 +84,8 @@ export default function ClassCard({ cls, onBooked, bookedClassIds = [] }) {
           <button
             onClick={handleBook}
             disabled={isFull || loading}
-            className="btn-primary text-xs py-2 px-4 flex-shrink-0"
+            className="btn-primary text-xs px-4 flex-shrink-0"
+            style={{ minHeight: '40px', minWidth: '80px' }}
           >
             {loading ? 'Reservando...' : 'Reservar'}
           </button>

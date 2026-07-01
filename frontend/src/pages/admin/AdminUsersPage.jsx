@@ -49,7 +49,7 @@ export default function AdminUsersPage() {
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {[1, 2, 3, 4].map(i => <div key={i} className="h-20 bg-neutral-800 rounded-2xl animate-pulse" />)}
+          {[1, 2, 3, 4].map(i => <div key={i} className="h-20 skeleton" />)}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -77,11 +77,12 @@ export default function AdminUsersPage() {
               {u.id !== me?.id && (
                 <button
                   onClick={() => toggleRole(u)}
-                  className={`flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors ${
+                  className={`flex-shrink-0 text-xs font-semibold px-3 rounded-xl transition-colors ${
                     u.role === 'admin'
                       ? 'bg-red-500/15 text-red-400 hover:bg-red-500/25'
                       : 'bg-neutral-800 text-neutral-400 hover:bg-neutral-700'
                   }`}
+                  style={{ minHeight: '36px' }}
                 >
                   {u.role === 'admin' ? 'Admin' : 'User'}
                 </button>

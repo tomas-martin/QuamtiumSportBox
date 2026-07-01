@@ -38,7 +38,7 @@ export default function AdminAttendeesPage() {
   }
 
   return (
-    <div className="px-4 py-5 animate-slide-up">
+    <div className="py-5 animate-slide-up">
       <Link to="/admin/classes" className="flex items-center gap-2 text-neutral-400 hover:text-white mb-5 transition-colors text-sm">
         <ArrowLeft size={16} /> Volver a clases
       </Link>
@@ -64,7 +64,7 @@ export default function AdminAttendeesPage() {
 
       {loading ? (
         <div className="space-y-3">
-          {[1, 2, 3].map(i => <div key={i} className="h-16 bg-neutral-800 rounded-2xl animate-pulse" />)}
+          {[1, 2, 3].map(i => <div key={i} className="h-16 skeleton" />)}
         </div>
       ) : attendees.length === 0 ? (
         <div className="card text-center py-10">
@@ -92,18 +92,18 @@ export default function AdminAttendeesPage() {
                 {a.status === 'attended' ? (
                   <span className="badge bg-green-500/15 text-green-400">Asistió</span>
                 ) : (
-                  <div className="flex gap-1">
+                  <div className="flex gap-1.5">
                     <button
                       onClick={() => markAttendance(a.id, 'attended')}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-green-500/15 text-green-400 hover:bg-green-500/25 transition-colors"
+                      className="w-10 h-10 flex items-center justify-center rounded-xl bg-green-500/15 text-green-400 hover:bg-green-500/25 transition-colors"
                     >
-                      <CheckCircle size={15} />
+                      <CheckCircle size={16} />
                     </button>
                     <button
                       onClick={() => markAttendance(a.id, 'cancelled')}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-800 text-neutral-500 hover:bg-red-900/30 hover:text-red-400 transition-colors"
+                      className="w-10 h-10 flex items-center justify-center rounded-xl bg-neutral-800 text-neutral-500 hover:bg-red-900/30 hover:text-red-400 transition-colors"
                     >
-                      <XCircle size={15} />
+                      <XCircle size={16} />
                     </button>
                   </div>
                 )}

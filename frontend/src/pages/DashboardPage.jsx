@@ -35,16 +35,16 @@ export default function DashboardPage() {
   const greeting = hour < 12 ? 'Buenos días' : hour < 19 ? 'Buenas tardes' : 'Buenas noches';
 
   return (
-    <div className="py-6 space-y-8 animate-slide-up">
+    <div className="py-5 sm:py-6 space-y-6 sm:space-y-8">
 
       {/* ── Hero greeting ── */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-900/60 to-neutral-900/20 border border-neutral-800/40 p-6 sm:p-8 min-h-[140px] flex flex-col justify-end">
-        <div className="absolute top-0 right-0 w-40 h-40 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-8 opacity-5 pointer-events-none">
-          <Dumbbell size={120} strokeWidth={1} />
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-900/60 to-neutral-900/20 border border-neutral-800/40 p-5 sm:p-8 min-h-[130px] sm:min-h-[160px] flex flex-col justify-end animate-slide-up">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-6 opacity-[0.04] pointer-events-none">
+          <Dumbbell size={110} strokeWidth={1} />
         </div>
-        <p className="text-neutral-500 text-xs font-bold tracking-widest uppercase mb-1">{greeting},</p>
-        <h1 className="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400 tracking-wide leading-none">
+        <p className="text-neutral-500 text-[11px] font-bold tracking-widest uppercase mb-1">{greeting},</p>
+        <h1 className="text-4xl xs:text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400 tracking-wide leading-none break-words">
           {firstName.toUpperCase()}
         </h1>
         {profile?.role === 'admin' && (
@@ -55,10 +55,10 @@ export default function DashboardPage() {
       </div>
 
       {/* ── Two column grid ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-8 items-start">
 
         {/* Próximas reservas */}
-        <section className="space-y-3">
+        <section className="space-y-3 animate-slide-up stagger-1">
           <div className="flex items-center justify-between px-1">
             <h2 className="text-xs font-bold tracking-widest uppercase text-neutral-500">Tus próximos turnos</h2>
             {myBookings.length > 0 && (
@@ -71,7 +71,7 @@ export default function DashboardPage() {
           {loading ? (
             <div className="space-y-2.5">
               {[1, 2].map(i => (
-                <div key={i} className="h-16 bg-neutral-900/40 border border-neutral-800/40 rounded-2xl animate-pulse" />
+                <div key={i} className="h-16 skeleton" />
               ))}
             </div>
           ) : myBookings.length === 0 ? (
@@ -86,15 +86,17 @@ export default function DashboardPage() {
             </div>
           ) : (
             <div className="space-y-2.5">
-              {myBookings.map(b => (
-                <UpcomingBookingCard key={b.id} booking={b} />
+              {myBookings.map((b, i) => (
+                <div key={b.id} className={`animate-slide-up stagger-${i + 2}`}>
+                  <UpcomingBookingCard booking={b} />
+                </div>
               ))}
             </div>
           )}
         </section>
 
         {/* Clases disponibles */}
-        <section className="space-y-3">
+        <section className="space-y-3 animate-slide-up stagger-2">
           <div className="flex items-center justify-between px-1">
             <h2 className="text-xs font-bold tracking-widest uppercase text-neutral-500">Clases disponibles</h2>
             <Link to="/schedule" className="text-red-500 hover:text-red-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1 transition-colors">
@@ -105,7 +107,7 @@ export default function DashboardPage() {
           {loading ? (
             <div className="space-y-3">
               {[1, 2, 3].map(i => (
-                <div key={i} className="h-24 bg-neutral-900/40 border border-neutral-800/40 rounded-2xl animate-pulse" />
+                <div key={i} className="h-24 skeleton" />
               ))}
             </div>
           ) : upcomingClasses.length === 0 ? (
@@ -117,8 +119,10 @@ export default function DashboardPage() {
             </div>
           ) : (
             <div className="space-y-3">
-              {upcomingClasses.map(cls => (
-                <ClassCard key={cls.id} cls={cls} onBooked={loadDashboard} />
+              {upcomingClasses.map((cls, i) => (
+                <div key={cls.id} className={`animate-slide-up stagger-${i + 1}`}>
+                  <ClassCard cls={cls} onBooked={loadDashboard} />
+                </div>
               ))}
             </div>
           )}

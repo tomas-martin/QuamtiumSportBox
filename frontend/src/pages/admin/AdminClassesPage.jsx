@@ -69,7 +69,7 @@ export default function AdminClassesPage() {
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[1, 2, 3].map(i => <div key={i} className="h-28 bg-neutral-800 rounded-2xl animate-pulse" />)}
+          {[1, 2, 3].map(i => <div key={i} className="h-28 skeleton" />)}
         </div>
       ) : classes.length === 0 ? (
         <div className="card text-center py-12">
@@ -129,14 +129,14 @@ function AdminClassCard({ cls, onEdit, onDelete, onCancel }) {
 
         {!cls.is_cancelled && (
           <div className="flex items-center gap-1">
-            <button onClick={onEdit} className="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white transition-colors">
-              <Pencil size={13} />
+            <button onClick={onEdit} className="w-10 h-10 flex items-center justify-center rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white transition-colors">
+              <Pencil size={14} />
             </button>
-            <button onClick={onCancel} className="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-800 hover:bg-yellow-900/30 text-neutral-400 hover:text-yellow-400 transition-colors">
-              <XCircle size={13} />
+            <button onClick={onCancel} className="w-10 h-10 flex items-center justify-center rounded-xl bg-neutral-800 hover:bg-yellow-900/30 text-neutral-400 hover:text-yellow-400 transition-colors">
+              <XCircle size={14} />
             </button>
-            <button onClick={onDelete} className="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-800 hover:bg-red-900/30 text-neutral-400 hover:text-red-400 transition-colors">
-              <Trash2 size={13} />
+            <button onClick={onDelete} className="w-10 h-10 flex items-center justify-center rounded-xl bg-neutral-800 hover:bg-red-900/30 text-neutral-400 hover:text-red-400 transition-colors">
+              <Trash2 size={14} />
             </button>
           </div>
         )}

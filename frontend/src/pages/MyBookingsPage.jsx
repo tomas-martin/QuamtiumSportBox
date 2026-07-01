@@ -46,7 +46,7 @@ export default function MyBookingsPage() {
   }
 
   return (
-    <div className="py-6 animate-slide-up space-y-6">
+    <div className="py-5 sm:py-6 animate-slide-up space-y-5 sm:space-y-6">
 
       {/* ── Header ── */}
       <div>
@@ -63,11 +63,12 @@ export default function MyBookingsPage() {
             key={key}
             id={`tab-${key}`}
             onClick={() => setTab(key)}
-            className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 ${
+            className={`flex-1 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 ${
               tab === key
                 ? 'bg-gradient-to-r from-red-600 to-red-500 text-white shadow-md shadow-red-950/30'
                 : 'text-neutral-500 hover:text-neutral-300'
             }`}
+            style={{ minHeight: '44px' }}
           >
             {label}
             {count > 0 && (
@@ -85,7 +86,7 @@ export default function MyBookingsPage() {
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {[1, 2, 3].map(i => (
-            <div key={i} className="h-24 bg-neutral-900/40 border border-neutral-800/40 rounded-2xl animate-pulse" />
+            <div key={i} className="h-24 skeleton" />
           ))}
         </div>
       ) : shown.length === 0 ? (
@@ -107,8 +108,10 @@ export default function MyBookingsPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {shown.map(b => (
-            <BookingCard key={b.id} booking={b} onCancel={handleCancel} showCancel={tab === 'upcoming'} />
+          {shown.map((b, i) => (
+            <div key={b.id} className={`animate-slide-up stagger-${Math.min(i + 1, 5)}`}>
+              <BookingCard booking={b} onCancel={handleCancel} showCancel={tab === 'upcoming'} />
+            </div>
           ))}
         </div>
       )}
